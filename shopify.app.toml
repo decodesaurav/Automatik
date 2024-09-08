@@ -1,3 +1,29 @@
-# This file stores configurations for your Shopify app.
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
+client_id = "603429ee0e021d85911d36938f56e96e"
+name = "automatik"
+handle = "automatik-4"
+application_url = "https://cookbook-probe-chase-dom.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "test-saurav-store.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://cookbook-probe-chase-dom.trycloudflare.com/auth/callback",
+  "https://cookbook-probe-chase-dom.trycloudflare.com/auth/shopify/callback",
+  "https://cookbook-probe-chase-dom.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-07"
+
+[pos]
+embedded = false
