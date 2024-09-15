@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ShopifyShop;
+use App\Services\Shopify\ShopifyChangeDetection;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Services\ShopifyProductFetchService;
 use App\Repositories\ShopifyProductInventoryRepository;
 use App\Repositories\ShopifyProductRepository;
 use App\Repositories\ShopifyProductVariantRepository;
@@ -39,13 +40,11 @@ class FetchShopifyProducts extends Command
 	 * @return void
 	 */
 	public function __construct(
-		ShopifyProductFetchService $shopifyService,
 		ShopifyProductRepository $productRepository,
 		ShopifyProductVariantRepository $productVariantRepository,
 		ShopifyProductInventoryRepository $productInventoryRepository
 	) {
 		parent::__construct();
-		$this->shopifyService = $shopifyService;
 		$this->productRepository = $productRepository;
 		$this->productVariantRepository = $productVariantRepository;
 		$this->productInventoryRepository = $productInventoryRepository;
@@ -59,10 +58,21 @@ class FetchShopifyProducts extends Command
 	public function handle()
 	{
 		try {
-			$shopifyProducts = $this->fetchShopifyProducts();
 
-			foreach ($shopifyProducts as $productsBatch) {
-				$this->processBatch($productsBatch);
+			//Check product update. (loop through each shop, product/json count, )
+			$shopifyShops = ShopifyShop::select('id','domain','token','last_synced_at')->get();
+
+			foreach($shopifyShops as $shopifyShop){
+				$params = [];
+				if( ! is_null($shopifyShop->last_synced_at)){
+					//Convert saved UTC time to Shopify time
+					$carbonUtc = Carbon::parse($shopifyShop->last_synced_at, 'UTC');
+					$formattedDateTime = $carbonUtc->format('Y-m-d\TH:i:sP');
+					$params['updated_at_min'] = $formattedDateTime;
+				}
+	
+				//Handle Change Detection using Query and Job
+				(new ShopifyChangeDetection($shopifyShop,$params))->startDetection();
 			}
 		} catch (\Exception $e) {
 			$this->logError($e, 'An error occurred during Shopify product fetching.');

@@ -68,7 +68,6 @@ class ShopifyVariantProductsDTO
 			'inventory_quantity' => $this->inventory_quantity,
 			'old_inventory_quantity' => $this->old_inventory_quantity,
 			'image_id' => $this->image_id,
-
 		];
 	}
 
