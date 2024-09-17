@@ -124,10 +124,10 @@ class SyncShopifyProductService
 				'shopify_product_id' => $productFromShopify['id']
 			], $data);
 			$this->formatAndCreateVariation($productFromShopify, $shop, $product, $isShopifyInitialSync);
-			$is_next_page_set = $this->setJobForNextPage($result->getHeader("Link"), $shop);
-			if (!$is_next_page_set) {
-				$this->finalizeProductSync($shop);
-			}
+		}
+		$is_next_page_set = $this->setJobForNextPage($result->getHeader("Link"), $shop);
+		if (!$is_next_page_set) {
+			$this->finalizeProductSync($shop);
 		}
 	}
 	private function fetchShopifyProducts($shop, $query): bool|HttpResponse
