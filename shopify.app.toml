@@ -1,3 +1,29 @@
-# This file stores configurations for your Shopify app.
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-scopes = "write_products"
+client_id = "f8bf06079f0acc1340023d0e552458a8"
+name = "automatik"
+handle = "automatik-6"
+application_url = "https://surveillance-distant-develops-voice.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "test-saurav-store.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,write_products"
+
+[auth]
+redirect_urls = [
+  "https://surveillance-distant-develops-voice.trycloudflare.com/auth/callback",
+  "https://surveillance-distant-develops-voice.trycloudflare.com/auth/shopify/callback",
+  "https://surveillance-distant-develops-voice.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-07"
+
+[pos]
+embedded = false
