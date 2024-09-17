@@ -3,7 +3,7 @@
 client_id = "f8bf06079f0acc1340023d0e552458a8"
 name = "automatik"
 handle = "automatik-6"
-application_url = "https://surveillance-distant-develops-voice.trycloudflare.com"
+application_url = "https://remainder-passage-flu-civil.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_products,write_products"
 
 [auth]
 redirect_urls = [
-  "https://surveillance-distant-develops-voice.trycloudflare.com/auth/callback",
-  "https://surveillance-distant-develops-voice.trycloudflare.com/auth/shopify/callback",
-  "https://surveillance-distant-develops-voice.trycloudflare.com/api/auth/callback"
+  "https://remainder-passage-flu-civil.trycloudflare.com/auth/callback",
+  "https://remainder-passage-flu-civil.trycloudflare.com/auth/shopify/callback",
+  "https://remainder-passage-flu-civil.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
