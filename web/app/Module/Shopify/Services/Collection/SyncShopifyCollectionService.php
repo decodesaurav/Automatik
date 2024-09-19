@@ -2,27 +2,19 @@
 
 namespace App\Module\Shopify\Services\Collection;
 
-use App\Exceptions\ShopifyApiRateLimitException;
 use App\Exceptions\ShopifyClosedStoreException;
 use App\Exceptions\ShopifyUninstalledStoreException;
-use App\Jobs\Shopify\FetchShopifyCollectionProducts;
 use App\Jobs\FetchShopifyCustomCollection;
 use App\Jobs\FetchShopifySmartCollection;
 use App\Models\Session;
-use App\Models\Shopify\ShopifyCollection;
-use App\Models\ShopifyProduct;
 use App\Module\Shopify\Helper\ShopifyHelper;
 use App\Module\Shopify\Repositories\Collection\ShopifyCollectionRepository;
 use App\Module\Shopify\Trait\APIHelper;
 use DateTime;
 use DateTimeZone;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Psr\Http\Client\ClientExceptionInterface;
 use Shopify\Clients\HttpResponse;
 use Shopify\Clients\Rest;
-use Shopify\Exception\MissingArgumentException;
-use Shopify\Exception\UninitializedContextException;
 
 class SyncShopifyCollectionService
 {
