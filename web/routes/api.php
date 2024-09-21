@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\CollectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return "Hello API";
 });
+
+Route::get("/collections",[CollectionController::class,"index"])->middleware('shopify.auth');
