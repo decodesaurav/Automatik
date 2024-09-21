@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ShopifyProductVariant extends Model
 {
     use HasFactory;
+	protected $table = "shopify_product_variations";
 
     protected $fillable = [
         'shopify_product_id',

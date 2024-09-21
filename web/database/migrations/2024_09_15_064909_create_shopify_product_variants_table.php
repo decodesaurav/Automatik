@@ -13,7 +13,7 @@ class CreateShopifyProductVariantsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('shopify_product_variants', function (Blueprint $table) {
+		Schema::create('shopify_product_variations', function (Blueprint $table) {
 			$table->id();
 			$table->unsignedBigInteger('shopify_product_id');
 			$table->unsignedBigInteger('session_id');
@@ -42,6 +42,6 @@ class CreateShopifyProductVariantsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('shopify_product_variants');
+		Schema::dropIfExists('shopify_product_variations');
 	}
 }

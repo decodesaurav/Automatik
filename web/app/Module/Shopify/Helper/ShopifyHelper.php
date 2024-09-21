@@ -25,4 +25,8 @@ class ShopifyHelper
 			throw $e;
 		}
 	}
+	public static function decodeGraphqlID($gid)
+	{
+		return array_reverse(explode('/', $gid))[0];
+	}
 }

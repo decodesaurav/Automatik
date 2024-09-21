@@ -11,6 +11,6 @@ class ShopifyVariationInventory extends Model
     protected $guarded = [];
 
     public function location() {
-        return $this->belongsTo(ShopifyShopLocation::class, 'location_id', 'shopify_location_id');
+        return $this->belongsTo(ShopifyShopLocation::class, 'shopify_location_id', 'shopify_location_id');
     }
 }

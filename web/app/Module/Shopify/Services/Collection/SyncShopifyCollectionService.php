@@ -2,27 +2,19 @@
 
 namespace App\Module\Shopify\Services\Collection;
 
-use App\Exceptions\ShopifyApiRateLimitException;
 use App\Exceptions\ShopifyClosedStoreException;
 use App\Exceptions\ShopifyUninstalledStoreException;
-use App\Jobs\Shopify\FetchShopifyCollectionProducts;
 use App\Jobs\FetchShopifyCustomCollection;
 use App\Jobs\FetchShopifySmartCollection;
 use App\Models\Session;
-use App\Models\Shopify\ShopifyCollection;
-use App\Models\ShopifyProduct;
 use App\Module\Shopify\Helper\ShopifyHelper;
 use App\Module\Shopify\Repositories\Collection\ShopifyCollectionRepository;
 use App\Module\Shopify\Trait\APIHelper;
 use DateTime;
 use DateTimeZone;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
-use Psr\Http\Client\ClientExceptionInterface;
 use Shopify\Clients\HttpResponse;
 use Shopify\Clients\Rest;
-use Shopify\Exception\MissingArgumentException;
-use Shopify\Exception\UninitializedContextException;
 
 class SyncShopifyCollectionService
 {
@@ -50,7 +42,7 @@ class SyncShopifyCollectionService
 			if (isset($query['page_info'])) {
 				unset($query['page_info']);
 			}
-			FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_collection_sync');
+			FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_smart_collection_sync');
 		}
 	}
 
@@ -149,7 +141,7 @@ class SyncShopifyCollectionService
 		if (isset($query['page_info'])) {
 			unset($query['page_info']);
 		}
-		FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_collection_sync');
+		FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_smart_collection_sync');
 	}
 
 	public function postActionForShopifyCollection(mixed $collections, $shop): void
@@ -229,7 +221,7 @@ class SyncShopifyCollectionService
 		if($next_page_info = $this->getNextPageInfo($links)){
 			$query['page_info'] = $next_page_info;
 			$query['limit']=1;
-			FetchShopifySmartCollection::dispatch($shop,$query)->onQueue('shopify_collection_sync');
+			FetchShopifySmartCollection::dispatch($shop,$query)->onQueue('shopify_smart_collection_sync');
 			return true;
 		}
 		return false;
