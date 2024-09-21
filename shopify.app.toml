@@ -1,3 +1,29 @@
-# This file stores configurations for your Shopify app.
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
+client_id = "7125a02b9d9b78ff62a366350c9ae4aa"
+name = "automatik"
+handle = "automatik-5"
+application_url = "https://destination-pad-college-showing.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "quickstart-f2333f2b.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://destination-pad-college-showing.trycloudflare.com/auth/callback",
+  "https://destination-pad-college-showing.trycloudflare.com/auth/shopify/callback",
+  "https://destination-pad-college-showing.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-07"
+
+[pos]
+embedded = false
