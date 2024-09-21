@@ -1,8 +1,9 @@
 import { Card, Page, Text, List } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
+import Task from "../components/CustomTask/Task";
 
-export default function CeateTask() {
+export default function CreateTask() {
   const { t } = useTranslation();
   return (
     <Page>
@@ -18,16 +19,8 @@ export default function CeateTask() {
             onAction: () => console.log("Secondary action"),
           },
         ]}
-      />
-        <Card>
-                <Text variant="headingXl" fontWeight="bold">
-                    Create Custom Task
-                </Text>
-                <List>
-                <List.Item>Felix Crafford</List.Item>
-                <List.Item>Ezequiel Manno</List.Item>
-                </List>
-        </Card>
+      />      
+      <Task />
     </Page>
   );
 }

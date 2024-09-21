@@ -30,6 +30,10 @@ export default function App() {
                   label: t("NavigationMenu.createTask"),
                   destination: "/createtask",
                 },
+                {
+                  label: t("NavigationMenu.taskList"),
+                  destination: "/tasklist",
+                }
               ]}
             />
             <Routes pages={pages} />
