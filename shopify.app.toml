@@ -3,7 +3,7 @@
 client_id = "f8bf06079f0acc1340023d0e552458a8"
 name = "automatik"
 handle = "automatik-6"
-application_url = "https://diploma-furnishings-danish-bridal.trycloudflare.com"
+application_url = "https://paypal-slot-prevent-kind.trycloudflare.com"
 embedded = true
 
 [build]
@@ -13,13 +13,13 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_products,write_products,read_locations"
+scopes = "read_locations,read_products,write_products,read_inventory,write_inventory"
 
 [auth]
 redirect_urls = [
-  "https://diploma-furnishings-danish-bridal.trycloudflare.com/auth/callback",
-  "https://diploma-furnishings-danish-bridal.trycloudflare.com/auth/shopify/callback",
-  "https://diploma-furnishings-danish-bridal.trycloudflare.com/api/auth/callback"
+  "https://paypal-slot-prevent-kind.trycloudflare.com/auth/callback",
+  "https://paypal-slot-prevent-kind.trycloudflare.com/auth/shopify/callback",
+  "https://paypal-slot-prevent-kind.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

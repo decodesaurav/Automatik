@@ -42,7 +42,7 @@ class SyncShopifyCollectionService
 			if (isset($query['page_info'])) {
 				unset($query['page_info']);
 			}
-			FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_collection_sync');
+			FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_smart_collection_sync');
 		}
 	}
 
@@ -141,7 +141,7 @@ class SyncShopifyCollectionService
 		if (isset($query['page_info'])) {
 			unset($query['page_info']);
 		}
-		FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_collection_sync');
+		FetchShopifySmartCollection::dispatch($shop, $query)->onQueue('shopify_smart_collection_sync');
 	}
 
 	public function postActionForShopifyCollection(mixed $collections, $shop): void
@@ -221,7 +221,7 @@ class SyncShopifyCollectionService
 		if($next_page_info = $this->getNextPageInfo($links)){
 			$query['page_info'] = $next_page_info;
 			$query['limit']=1;
-			FetchShopifySmartCollection::dispatch($shop,$query)->onQueue('shopify_collection_sync');
+			FetchShopifySmartCollection::dispatch($shop,$query)->onQueue('shopify_smart_collection_sync');
 			return true;
 		}
 		return false;

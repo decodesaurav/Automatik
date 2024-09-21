@@ -13,7 +13,7 @@ class AddWeightToShopifyProductVariantsTable extends Migration
      */
     public function up()
     {
-        Schema::table('shopify_product_variants', function (Blueprint $table) {
+        Schema::table('shopify_product_variations', function (Blueprint $table) {
             $table->float('weight');
             $table->string('weight_unit');
 			$table->string('barcode')->nullable();
@@ -27,7 +27,7 @@ class AddWeightToShopifyProductVariantsTable extends Migration
      */
     public function down()
     {
-        Schema::table('shopify_product_variants', function (Blueprint $table) {
+        Schema::table('shopify_product_variations', function (Blueprint $table) {
             $table->dropColumn(['weight','weight_unit','barcode']);
         });
     }
