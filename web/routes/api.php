@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CollectionController;
+use App\Http\Controllers\API\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::get("/collections",[CollectionController::class,"index"])->middleware('shopify.auth');
+Route::post('/tasks', [TaskController::class, 'store'])->middleware('shopify.auth');

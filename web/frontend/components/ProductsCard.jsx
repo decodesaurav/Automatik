@@ -26,32 +26,6 @@ export function ProductsCard() {
     },
   });
 
-  useEffect(() => {
-    fetchCollections();
-  },[])
-
-  const fetchCollections = () => {
-
-    const response = fetch("/api/collections", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
-        .then((response) => {
-            if (!response.ok) {
-                return "not ok";
-            }
-            return response.json();
-
-        }).then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-};
-
   const toastMarkup = toastProps.content && !isRefetchingCount && (
     <Toast {...toastProps} onDismiss={() => setToastProps(emptyToastProps)} />
   );

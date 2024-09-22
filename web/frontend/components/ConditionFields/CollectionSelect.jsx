@@ -1,11 +1,48 @@
 import { InlineStack, RadioButton, Select, TextField,Text, BlockStack } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useState } from "react";
+import { useAuthenticatedFetch } from "@shopify/app-bridge-react";
 
-export default function CollectionSelect() {
+export default function CollectionSelect({state,dispatch}) {
   const { t } = useTranslation();
   const [method, setMethod] = useState('increase');
-  const [value, setValue] = useState(0);
+  const [collections,setCollections] = useState([]);
+  const fetch = useAuthenticatedFetch();
+
+  useEffect(() => {
+    fetchCollections();
+  },[]);
+
+  const fetchCollections = () => {
+    const response = fetch("/api/collections", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+    .then((response) => {
+        if (!response.ok) {
+            return "not ok";
+        }
+        return response.json();
+
+    }).then((response) => {
+        setCollections(response.collections)
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+};
+
+const formattedCollections = () => {
+    return collections?.map((coll) => ({
+      label: coll.title,
+      value: coll.id,
+    }));
+  };
+  
+
+  console.log(formattedCollections(),"for collections")
 
   return (
     <>
@@ -13,16 +50,7 @@ export default function CollectionSelect() {
             <Text>Where product is in Collection</Text>
             <InlineStack gap={200}>
                     <Select
-                        options={[
-                            {
-                                label: "Ladies Clothing",
-                                value: "greater_than",
-                            },
-                            {
-                                label: "Kids Footwear",
-                                value: "less_than",
-                            },
-                        ]}
+                        options={formattedCollections()}
                         // onChange={handleAdjustmentChange}
                         value={method}
                     />

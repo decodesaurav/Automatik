@@ -1,47 +1,51 @@
-import { InlineStack, RadioButton, Select, TextField } from "@shopify/polaris";
+import { InlineStack, Select, TextField } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useReducer } from "react";
+import CustomTaskReducer, { actionTypes, customeTaskState } from "../../reducers/CustomTaskReducer";
 
 export default function InventoryTask() {
   const { t } = useTranslation();
-  const [method, setMethod] = useState('increase');
-  const [value, setValue] = useState(0);
-  const [adjustmentType, setAdjustmentType] = useState('amount');
+  const [state, dispatch] = useReducer(CustomTaskReducer, customeTaskState);
 
+  const handleAdjustmentChange = useCallback((value) => {
+      dispatch({
+          type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
+          payload: { method: value }, // Update the method in adjustment
+      });
+  }, []);
 
-    const handleAdjustmentChange = useCallback((value) => setMethod(value), []);
-    const handleAdjustmentTypeChange = useCallback(
-        (value) => setAdjustmentType(value),
-        []
-    );
-    const handleValueChange = useCallback((newValue) => setValue(newValue), []);
+  const handleAdjustmentTypeChange = useCallback((value) => {
+      dispatch({
+          type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
+          payload: { adjustmentType: value }, // Update the adjustment type in adjustment
+      });
+  }, []);
+
+  const handleValueChange = useCallback((newValue) => {
+      dispatch({
+          type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
+          payload: { value: newValue }, // Update the value in adjustment
+      });
+  }, []);
 
   return (
     <>
-        
-        <InlineStack gap={200}>
-                <Select
-                    options={[
-                        {
-                            label: "Increase stock by",
-                            value: "increase",
-                        },
-                        {
-                            label: "Decrease stock by",
-                            value: "decrease",
-                        },
-                    ]}
-                    onChange={handleAdjustmentChange}
-                    value={method}
-                />
-                <TextField
-                    type="number"
-                    min={0}
-                    value={value}
-                    onChange={handleValueChange}
-                />
-            </InlineStack>
+      <InlineStack gap={200}>
+        <Select
+          options={[
+            { label: "Increase stock by", value: "increase" },
+            { label: "Decrease stock by", value: "decrease" },
+          ]}
+          onChange={handleAdjustmentChange}
+          value={state.adjustment.method || "increase"} // Use state from reducer
+        />
+        <TextField
+          type="number"
+          min={0}
+          value={state.adjustment.value || 0} // Use state from reducer
+          onChange={handleValueChange}
+        />
+      </InlineStack>
     </>
   );
-
 }

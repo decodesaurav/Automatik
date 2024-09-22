@@ -1,11 +1,13 @@
 import { Tag, Autocomplete, LegacyStack,Text, BlockStack} from '@shopify/polaris';
-import {useState, useCallback, useMemo} from 'react';
+import {useState, useCallback, useMemo, useReducer} from 'react';
 import PriceField from '../ConditionFields/PriceField';
 import StockField from '../ConditionFields/StockField';
 import TitleField from '../ConditionFields/TitleField';
 import CollectionSelect from '../ConditionFields/CollectionSelect';
+import CustomTaskReducer, { customeTaskState } from '../../reducers/CustomTaskReducer';
 
 export default function TaskCondition({selectedTask}) {
+  const [state, dispatch] = useReducer(CustomTaskReducer, customeTaskState);
   const deselectedOptions = [
       {value: 'collection', label: 'Collection'},
       {value: 'price', label: 'Price'},
@@ -38,6 +40,7 @@ export default function TaskCondition({selectedTask}) {
       const options = [...selectedOptions];
       options.splice(options.indexOf(tag), 1);
       setSelectedOptions(options);
+      dispatch({ type: 'REMOVE_CONDITION', payload: { field: tag } });
     },
     [selectedOptions],
   );
@@ -85,16 +88,16 @@ export default function TaskCondition({selectedTask}) {
         {
             selectedOptions.map(option => {
                 if(option =='price'){
-                    return <PriceField/>
+                    return <PriceField state={state} dispatch={dispatch}/>
                 }
                 if(option =='stock'){
-                    return <StockField/>
+                    return <StockField state={state} dispatch={dispatch}/>
                 }
                 if(option == 'title'){
-                    return <TitleField />
+                    return <TitleField  state={state} dispatch={dispatch}/>
                 }
                 if(option == 'collection'){
-                    return <CollectionSelect />
+                    return <CollectionSelect state={state} dispatch={dispatch}/>
                 }
             })
         }
