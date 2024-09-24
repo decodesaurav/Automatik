@@ -1,23 +1,10 @@
-import { InlineStack, RadioButton, Select, TextField } from "@shopify/polaris";
+import { BlockStack, InlineError, InlineStack, RadioButton, Select, TextField } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useReducer, useState } from "react";
-import CustomTaskReducer, { actionTypes, customeTaskState } from "../../reducers/CustomTaskReducer";
+import { useCallback, useReducer } from "react";
 
-export default function PriceTask() {
+export default function PriceTask({stateData,dispatch,actionTypes,errorData}) {
+    let state = stateData;
   const { t } = useTranslation();
-  const [state, dispatch] = useReducer(CustomTaskReducer, customeTaskState);
-  const [method, setMethod] = useState('increase');
-  const [value, setValue] = useState(0);
-  const [adjustmentType, setAdjustmentType] = useState('amount');
-
-    // const handleAdjustmentChange = useCallback((value) => setMethod(value), []);
-    // const handleAdjustmentTypeChange = useCallback(
-    //     (value) => setAdjustmentType(value),
-    //     []
-    // );
-    // const handleValueChange = useCallback((newValue) => setValue(newValue), []);
-
-
     const handleAdjustmentChange = useCallback((value) => {
         dispatch({
             type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
@@ -39,12 +26,11 @@ export default function PriceTask() {
         });
     }, []);
 
-    console.log(state.adjustment)
-
   return (
     <>
         
         <InlineStack gap={200}>
+            <BlockStack>
                 <Select
                     options={[
                         {
@@ -57,14 +43,26 @@ export default function PriceTask() {
                         },
                     ]}
                     onChange={handleAdjustmentChange}
-                    value={method}
+                    value={state.adjustment?.method}
                 />
+                {errorData?.adjustment_method && (
+                    <InlineError message={errorData.adjustment_method} fieldID="method" />
+                )}
+            </BlockStack>
+
+            <BlockStack>
                 <TextField
                     type="number"
                     min={0}
                     value={state.adjustment?.value}
                     onChange={handleValueChange}
                 />
+                {errorData?.adjustment_value && (
+                    <InlineError message={errorData.adjustment_value} fieldID="value" />
+                )}
+            </BlockStack>
+
+            <BlockStack>
                 <Select
                     options={[
                         {
@@ -79,7 +77,11 @@ export default function PriceTask() {
                     onChange={handleAdjustmentTypeChange}
                     value={state.adjustment?.adjustmentType}
                 />
-            </InlineStack>
+                {errorData?.adjustment_type && (
+                    <InlineError message={errorData.adjustment_type} fieldID="adjustmentType" />
+                )}
+            </BlockStack>
+        </InlineStack>
     </>
   );
 

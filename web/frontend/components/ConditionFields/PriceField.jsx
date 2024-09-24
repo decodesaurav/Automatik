@@ -1,51 +1,57 @@
-import { InlineStack, RadioButton, Select, TextField,Text, BlockStack } from "@shopify/polaris";
-import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
+  import { InlineStack, Select, TextField, Text, BlockStack, InlineError } from "@shopify/polaris";
+  import { useTranslation } from "react-i18next";
+  import { useCallback } from "react";
 
-export default function PriceField({state,dispatch}) {
-  const { t } = useTranslation();
+  export default function PriceField({ state, dispatch }) {
+    const { t } = useTranslation();
 
-  const handleMethodChange = (value) => {
-    dispatch({
-      type: 'HANDLE_CONDITION_CHANGE',
-      payload: { field: 'price', data: { method: value } },
-    });
-  };
+    const condition = state.conditions['price'] || {};
+    const errorData = state.errorData?.conditions?.['price'] || {};
+    const handleMethodChange = (value) => {
+      dispatch({
+        type: 'HANDLE_CONDITION_CHANGE',
+        payload: { field: 'price', data: { method: value } },
+      });
+    };
 
-  const handleValueChange = (newValue) => {
-    dispatch({
-      type: 'HANDLE_CONDITION_CHANGE',
-      payload: { field: 'price', data: { value: newValue } },
-    });
-  };
-  const condition = state.conditions.find(cond => cond.field === 'price') || {};
-  return (
-    <>
+    const handleValueChange = (newValue) => {
+      dispatch({
+        type: 'HANDLE_CONDITION_CHANGE',
+        payload: { field: 'price', data: { value: newValue } },
+      });
+    };
+
+    return (
+      <>
         <BlockStack gap={100}>
-            <Text>Where Price is</Text>
-            <InlineStack gap={200}>
-                    <Select
-                        options={[
-                            {
-                                label: "Greater than",
-                                value: "greater_than",
-                            },
-                            {
-                                label: "Less than",
-                                value: "less_than",
-                            },
-                        ]}
-                        onChange={handleMethodChange}
-                        value={condition?.method || 'greater_than'}
-                    />
-                    <TextField
-                        type="number"
-                        value={condition?.value ?? 0}
-                        onChange={handleValueChange}
-                    />
-                </InlineStack>
+          <Text>Where Price is</Text>
+          <InlineStack gap={200}>
+            <BlockStack>
+              <Select
+                options={[
+                  { label: "Greater than", value: "greater_than" },
+                  { label: "Less than", value: "less_than" },
+                ]}
+                onChange={handleMethodChange}
+                value={condition?.method || 'greater_than'}
+              />
+              {errorData?.method && (
+                <InlineError message={errorData.method} fieldID="priceMethod" />
+              )}
+            </BlockStack>
+            <BlockStack>
+              <TextField
+                type="number"
+                value={condition?.value ?? 0}
+                onChange={handleValueChange}
+                error={!!errorData?.value} // Mark as error if value is present
+              />
+              {errorData?.value && (
+                <InlineError message={errorData.value} fieldID="priceValue" />
+              )}
+            </BlockStack>
+          </InlineStack>
         </BlockStack>
-    </>
-  );
-
-}
+      </>
+    );
+  }

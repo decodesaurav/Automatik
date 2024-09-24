@@ -3,7 +3,7 @@
 client_id = "7125a02b9d9b78ff62a366350c9ae4aa"
 name = "automatik"
 handle = "automatik-5"
-application_url = "https://night-topics-promotions-water.trycloudflare.com"
+application_url = "https://excerpt-closed-windows-decent.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://night-topics-promotions-water.trycloudflare.com/auth/callback",
-  "https://night-topics-promotions-water.trycloudflare.com/auth/shopify/callback",
-  "https://night-topics-promotions-water.trycloudflare.com/api/auth/callback"
+  "https://excerpt-closed-windows-decent.trycloudflare.com/auth/callback",
+  "https://excerpt-closed-windows-decent.trycloudflare.com/auth/shopify/callback",
+  "https://excerpt-closed-windows-decent.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

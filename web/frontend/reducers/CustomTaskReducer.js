@@ -3,18 +3,20 @@ export const customeTaskState = {
         singular: "task",
         plural: "tasks",
     },
-    conditionsOptions: "price",
+    conditionsOptions: ["price"],
     conditions: [],
     adjustment: {},
     taskType: "price",
+    revertSchedule: false,
+    scheduleOnlyOneTime: false,
     scheduleData: {
         scheduled_at_date: "",
         schedule_at_time: "",
         revert_at_date: "",
         revert_at_time: "",
-        only_schedule_one_time: false,
         reschedule_frequency: ""
-    }
+    },
+    errorData: {}
 };
 
 export const actionTypes = {
@@ -23,16 +25,37 @@ export const actionTypes = {
     HANDLE_ADJUSTMENT_CHANGE: "HANDLE_ADJUSTMENT_CHANGE",
     HANDLE_CONDITION_CHANGE: "HANDLE_CONDITION_CHANGE",
     REMOVE_CONDITION: "REMOVE_CONDITION",
+    HANDLE_SCHEDULE_ONE_TIME_ONLY: "HANDLE_SCHEDULE_ONE_TIME_ONLY",
+    HANDLE_REVERT_SCHEDULE: "HANDLE_REVERT_SCHEDULE",
+    HANDLE_REVERT_TIME_CHANGE: "HANDLE_REVERT_TIME_CHANGE",
+    SET_ERRORS_DATA: "SET_ERRORS_DATA", 
+    SET_SELECTED_OPTIONS: "SET_SELECTED_OPTIONS"
  };
 
 const CustomTaskReducer = (state, action) => {
     switch (action.type) {
+        case actionTypes.SET_ERRORS_DATA: {
+            return { ...state, errorData: action.payload };
+        }
+        case actionTypes.SET_SELECTED_OPTIONS:
+        return {
+            ...state,
+            conditionsOptions: action.payload,
+        };
         case actionTypes.HANDLE_TASK_CHANGE:
             return { ...state, taskType: action.payload };
+        case actionTypes.HANDLE_SCHEDULE_ONE_TIME_ONLY:
+                return { ...state, scheduleOnlyOneTime: !state.scheduleOnlyOneTime };
+        case actionTypes.HANDLE_REVERT_SCHEDULE:
+                    return { ...state, revertSchedule: !state.revertSchedule };
         case actionTypes.HANDLE_SCHEDULE_TIME_CHANGE:
             return {
                 ...state, scheduleData: { ...state.scheduleData, ...action.payload }
             }
+        case actionTypes.HANDLE_REVERT_TIME_CHANGE:
+            return {
+                ...state, scheduleData: { ...state.scheduleData, ...action.payload }
+            }    
         case actionTypes.HANDLE_ADJUSTMENT_CHANGE:
             return {
                 ...state,
@@ -67,9 +90,15 @@ const CustomTaskReducer = (state, action) => {
                 const updatedConditions = state.conditions.filter(
                     (condition) => condition.field !== action.payload.field
                 );
+            
+                const updatedConditionsOptions = state.conditionsOptions.filter(
+                    (option) => option !== action.payload.field
+                );
+            
                 return {
                     ...state,
                     conditions: updatedConditions,
+                    conditionsOptions: updatedConditionsOptions,
                 };
             }
         default:

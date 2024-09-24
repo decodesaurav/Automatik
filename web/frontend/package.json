@@ -16,9 +16,13 @@
     "extends": "@shopify/stylelint-polaris"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@formatjs/intl-locale": "^3.3.2",
     "@formatjs/intl-localematcher": "^0.4.0",
     "@formatjs/intl-pluralrules": "^5.2.4",
+    "@mui/material": "^6.1.1",
+    "@mui/x-date-pickers": "^7.18.0",
     "@shopify/app-bridge": "^3.7.7",
     "@shopify/app-bridge-react": "^3.7.7",
     "@shopify/i18next-shopify": "^0.2.9",
@@ -27,6 +31,7 @@
     "i18next": "^23.1.0",
     "i18next-resources-to-backend": "^1.1.4",
     "react": "^18.2.0",
+    "react-datetime-picker": "^6.0.1",
     "react-dom": "^18.2.0",
     "react-i18next": "^13.0.0",
     "react-query": "^3.34.19",

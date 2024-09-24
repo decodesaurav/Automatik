@@ -14,13 +14,6 @@ export default function InventoryTask() {
       });
   }, []);
 
-  const handleAdjustmentTypeChange = useCallback((value) => {
-      dispatch({
-          type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
-          payload: { adjustmentType: value }, // Update the adjustment type in adjustment
-      });
-  }, []);
-
   const handleValueChange = useCallback((newValue) => {
       dispatch({
           type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,

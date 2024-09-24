@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Select, InlineStack } from '@shopify/polaris';
+import { Select, InlineStack, Box } from '@shopify/polaris';
 
 const generateTimeOptions = (limit) => {
   const options = [];
@@ -28,22 +28,24 @@ export default function CustomTimePicker({ label, value, onChange }) {
   }, [hours, onChange]);
 
   return (
-    <div>
-      <label style={{ marginBottom: '10px', display: 'block' }}>{label}</label>
-      <InlineStack>
+    <Box paddingBlockStart={100}>
+      <label>{label}</label>
+      <InlineStack gap={100}>
         <Select
-          label="Hours"
+          label="Hour"
+          labelInline
           options={hourOptions}
           onChange={handleHoursChange}
           value={hours}
         />
         <Select
-          label="Minutes"
+          label="Minute"
+          labelInline
           options={minuteOptions}
           onChange={handleMinutesChange}
           value={minutes}
         />
       </InlineStack>
-    </div>
+    </Box>
   );
 }
