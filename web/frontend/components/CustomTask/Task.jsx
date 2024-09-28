@@ -6,10 +6,14 @@ import InventoryTask from "./InventoryTask";
 import TaskCondition from "./TaskCondition";
 import ScheduleTaskTime from "../ScheduleTime/ScheduleTaskTime";
 import CustomTaskReducer, { actionTypes, customeTaskState } from "../../reducers/CustomTaskReducer";
+import { useAppBridge, useAuthenticatedFetch } from "@shopify/app-bridge-react";
+import { Redirect } from "@shopify/app-bridge/actions";
 
 export default function Task() {
   const [state, dispatch] = useReducer(CustomTaskReducer, customeTaskState);
   const { t } = useTranslation();
+  const fetch = useAuthenticatedFetch();
+  const app = useAppBridge();
 
   const handleChangeTaskType = (checked, newValue) => {
       dispatch({
@@ -101,9 +105,60 @@ const handleValidation = () => {
 
   const saveTask = () => {
       handleValidation();
-  }
+      const formData = {
+        task_type: state.taskType,
+        schedule_time: `${state.scheduleData.scheduled_at_date} ${state.scheduleData.schedule_at_time}`,
+        revert_time: state.revertSchedule
+            ? `${state.scheduleData.revert_at_date} ${state.scheduleData.revert_at_time}`
+            : '',
+        frequency: state.scheduleData.reschedule_frequency || '',
+        adjustment: {
+            value: state.adjustment.value,
+            adjustment_type: state.adjustment.adjustmentType,
+            method: state.adjustment.method,
+        },
+        conditions: [],
+    };
 
-console.log(state)
+    // Add conditions data to formData object
+    state.conditions.forEach((condition) => {
+      console.log("Cndn",condition)
+        formData.conditions.push({
+            field: condition.field,
+            value: condition.value,
+            method: condition.method,
+        });
+    });
+
+    console.log(formData, "formData");
+
+    const response = fetch("/api/tasks", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+              "Content-Type": "application/json",
+          }
+      })
+      .then((response) => {
+          if (!response.ok) {
+              return "not ok";
+          }
+          return response.json();
+
+      }).then((response) => {
+        if(response.success){
+          const redirect = Redirect.create(app);
+          redirect.dispatch(
+            Redirect.Action.APP,
+            "/tasklist"
+          );
+        }
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+
+  }
 
   return (
     <>

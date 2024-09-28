@@ -15,6 +15,11 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('task_type');
+            $table->string('schedule_time');
+            $table->string('revert_time')->nullable();
+            $table->string('frequency')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
