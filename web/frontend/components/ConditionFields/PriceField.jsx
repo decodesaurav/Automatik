@@ -5,7 +5,7 @@
   export default function PriceField({ state, dispatch }) {
     const { t } = useTranslation();
 
-    const condition = state.conditions['price'] || {};
+    const condition = state.conditions.find(cond => cond.field === 'price') || {};
     const errorData = state.errorData?.conditions?.['price'] || {};
     const handleMethodChange = (value) => {
       dispatch({
@@ -44,7 +44,6 @@
                 type="number"
                 value={condition?.value ?? 0}
                 onChange={handleValueChange}
-                error={!!errorData?.value} // Mark as error if value is present
               />
               {errorData?.value && (
                 <InlineError message={errorData.value} fieldID="priceValue" />

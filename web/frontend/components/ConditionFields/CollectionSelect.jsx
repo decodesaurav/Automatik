@@ -1,17 +1,30 @@
 import { InlineStack, RadioButton, Select, TextField,Text, BlockStack } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthenticatedFetch } from "@shopify/app-bridge-react";
 
 export default function CollectionSelect({state,dispatch}) {
   const { t } = useTranslation();
-  const [method, setMethod] = useState('increase');
   const [collections,setCollections] = useState([]);
   const fetch = useAuthenticatedFetch();
 
   useEffect(() => {
     fetchCollections();
   },[]);
+
+  const handleCollectionChange = (value) => {
+    dispatch({
+      type: 'HANDLE_CONDITION_CHANGE',
+      payload: { field: 'collection', data: { method: 'collection' } },
+    });
+    dispatch({
+      type: 'HANDLE_CONDITION_CHANGE',
+      payload: { field: 'collection', data: { value: value } },
+    });
+  };
+
+  const condition = state.conditions.find(cond => cond.field === 'collection') || {};
+  const errorData = state.errorData?.conditions?.['collection'] || {};
 
   const fetchCollections = () => {
     const response = fetch("/api/collections", {
@@ -51,8 +64,8 @@ const formattedCollections = () => {
             <InlineStack gap={200}>
                     <Select
                         options={formattedCollections()}
-                        // onChange={handleAdjustmentChange}
-                        value={method}
+                        onChange={handleCollectionChange}
+                        value={parseInt(condition?.value)}
                     />
                 </InlineStack>
         </BlockStack>

@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 
 export default function StockField({state,dispatch}) {
   const { t } = useTranslation();
-  const [method, setMethod] = useState('increase');
-  const [value, setValue] = useState(0);
 
   const handleMethodChange = (value) => {
     dispatch({
