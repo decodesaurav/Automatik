@@ -15,7 +15,6 @@ export default function TitleField({state,dispatch}) {
     });
   };
   const condition = state.conditions.find(cond => cond.field === 'title') || {};
-  console.log(condition)
   return (
     <>
         <BlockStack gap={100}>
