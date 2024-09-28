@@ -42,6 +42,7 @@
             <BlockStack>
               <TextField
                 type="number"
+                min={0}
                 value={condition?.value ?? 0}
                 onChange={handleValueChange}
               />

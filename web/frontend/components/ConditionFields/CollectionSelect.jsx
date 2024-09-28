@@ -54,9 +54,6 @@ const formattedCollections = () => {
     }));
   };
   
-
-  console.log(formattedCollections(),"for collections")
-
   return (
     <>
         <BlockStack gap={100}>

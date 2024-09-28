@@ -49,6 +49,7 @@ export default function StockField({state,dispatch}) {
                 <BlockStack>
                     <TextField
                         type="number"
+                        min={0}
                         value={condition?.value ?? 0}
                         onChange={handleValueChange}
                     />
