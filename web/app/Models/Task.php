@@ -11,6 +11,7 @@ class Task extends Model
         'revert_time',
         'frequency',
         'status',
+        'session_id'
     ];
 
     // Define relationships
