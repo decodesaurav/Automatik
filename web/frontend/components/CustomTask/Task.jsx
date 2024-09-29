@@ -111,6 +111,7 @@ const handleValidation = () => {
       handleValidation();
       const formData = {
         task_type: state.taskType,
+        task_name: state.taskName,
         schedule_time: `${state.scheduleData.scheduled_at_date} ${state.scheduleData.schedule_at_time}`,
         revert_time: state.revertSchedule
             ? `${state.scheduleData.revert_at_date} ${state.scheduleData.revert_at_time}`
