@@ -1,25 +1,25 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "7125a02b9d9b78ff62a366350c9ae4aa"
+client_id = "f8bf06079f0acc1340023d0e552458a8"
 name = "automatik"
-handle = "automatik-5"
-application_url = "https://excerpt-closed-windows-decent.trycloudflare.com"
+handle = "automatik-6"
+application_url = "https://terror-holland-cardiff-brings.trycloudflare.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "quickstart-f2333f2b.myshopify.com"
+dev_store_url = "test-saurav-store.myshopify.com"
 include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_inventory,read_locations,read_products,write_inventory,write_products"
 
 [auth]
 redirect_urls = [
-  "https://excerpt-closed-windows-decent.trycloudflare.com/auth/callback",
-  "https://excerpt-closed-windows-decent.trycloudflare.com/auth/shopify/callback",
-  "https://excerpt-closed-windows-decent.trycloudflare.com/api/auth/callback"
+  "https://terror-holland-cardiff-brings.trycloudflare.com/auth/callback",
+  "https://terror-holland-cardiff-brings.trycloudflare.com/auth/shopify/callback",
+  "https://terror-holland-cardiff-brings.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

@@ -28,4 +28,9 @@ class ShopifyProduct extends Model
         'upload_status',
         'profile_id',
     ];
+
+	public function variations()
+    {
+        return $this->hasMany(ShopifyProductVariant::class);
+    }
 }
