@@ -33,6 +33,10 @@ export default function App() {
                 {
                   label: t("NavigationMenu.taskList"),
                   destination: "/tasklist",
+                },
+                {
+                  label: t("NavigationMenu.quickTaskList"),
+                  destination: "/quicktasklist",
                 }
               ]}
             />

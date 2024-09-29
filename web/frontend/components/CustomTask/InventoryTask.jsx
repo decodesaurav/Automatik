@@ -1,4 +1,4 @@
-import { BlockStack, InlineStack, Select, TextField } from "@shopify/polaris";
+import { BlockStack, InlineError, InlineStack, Select, TextField } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useCallback, useReducer } from "react";
 

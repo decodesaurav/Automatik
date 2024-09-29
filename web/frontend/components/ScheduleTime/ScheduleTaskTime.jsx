@@ -93,6 +93,13 @@ export default function ScheduleTaskTime({stateData,dispatch,actionTypes,errorDa
       });
   }, [dispatch]);
 
+  const handleTaskNameChange = useCallback((value) => {
+    dispatch({
+        type: actionTypes.HANDLE_TASK_NAME_CHANGE,
+        payload: value
+    });
+}, [dispatch]);
+
   const rescheduleFrequencyOptions = [
       { label: 'Everyday (+1 day)', value: 'everyday' },
       { label: 'Every 2nd day (+2 days)', value: 'every_two_day' },
@@ -112,6 +119,18 @@ export default function ScheduleTaskTime({stateData,dispatch,actionTypes,errorDa
   return (
       <Box paddingBlockStart={400}>
           {/* Schedule Section */}
+          <Box paddingBlockEnd={400}>
+            <TextField
+                    label="Task Name"
+                    placeholder="Enter task name (please use name which reminds you what task does)"
+                    value={state.taskName}
+                    onChange={handleTaskNameChange}
+                    autoComplete="off"
+                /> 
+                {errorData.task_name && (
+                    <InlineError message={errorData.task_name} fieldID="taskName" />
+                )}
+            </Box>
           <InlineStack>
               <Box minWidth="350px" paddingInlineEnd={400}>
                   <Popover

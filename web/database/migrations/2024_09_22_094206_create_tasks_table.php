@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('session_id');
             $table->string('task_type');
+            $table->string('task_name');
             $table->string('schedule_time');
             $table->string('revert_time')->nullable();
             $table->string('frequency')->nullable();

@@ -6,6 +6,7 @@ export const customeTaskState = {
     conditionsOptions: ["price"],
     conditions: [],
     adjustment: {},
+    taskName: "",
     taskType: "price",
     revertSchedule: false,
     scheduleOnlyOneTime: false,
@@ -21,6 +22,7 @@ export const customeTaskState = {
 
 export const actionTypes = {
     HANDLE_TASK_CHANGE: "HANDLE_TASK_CHANGE",
+    HANDLE_TASK_NAME_CHANGE: "HANDLE_TASK_NAME_CHANGE",
     HANDLE_SCHEDULE_TIME_CHANGE: "HANDLE_SCHEDULE_TIME_CHANGE",
     HANDLE_ADJUSTMENT_CHANGE: "HANDLE_ADJUSTMENT_CHANGE",
     HANDLE_CONDITION_CHANGE: "HANDLE_CONDITION_CHANGE",
@@ -44,6 +46,8 @@ const CustomTaskReducer = (state, action) => {
         };
         case actionTypes.HANDLE_TASK_CHANGE:
             return { ...state, taskType: action.payload };
+        case actionTypes.HANDLE_TASK_NAME_CHANGE:
+            return { ...state, taskName: action.payload };    
         case actionTypes.HANDLE_SCHEDULE_ONE_TIME_ONLY:
                 return { ...state, scheduleOnlyOneTime: !state.scheduleOnlyOneTime };
         case actionTypes.HANDLE_REVERT_SCHEDULE:

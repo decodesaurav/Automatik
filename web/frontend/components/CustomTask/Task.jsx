@@ -43,6 +43,10 @@ export default function Task() {
       errors.conditionsOptions = "Atleast one condition field is required.";
     }
 
+    if (!state.taskName || state.taskName=="") {
+      errors.task_name = "Task Name is required.";
+    }
+
     //Validate Adjustment
     if (!state.adjustment.method ) {
       errors.adjustment_method = "Adjustment method is required.";
@@ -122,7 +126,6 @@ const handleValidation = () => {
 
     // Add conditions data to formData object
     state.conditions.forEach((condition) => {
-      console.log("Cndn",condition)
         formData.conditions.push({
             field: condition.field,
             value: condition.value,

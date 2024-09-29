@@ -22,6 +22,7 @@ class TaskController extends Controller
             // Save Task First
             $taskData = [
                 'session_id' => $session->id,
+                'task_name' => $request->task_name,
                 'task_type' => $request->task_type,
                 'schedule_time' => $request->schedule_time,
                 'revert_time' => $request->revert_time ?: null,
