@@ -1,10 +1,38 @@
 import { Card, Page, Text, List, BlockStack } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
+import { TitleBar, useAuthenticatedFetch } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import TaskItem from "../components/TaskList/Index";
+import { useEffect, useState } from "react";
 
 export default function TaskList() {
   const { t } = useTranslation();
+  const fetch = useAuthenticatedFetch();
+  const [tasks,setTasks] = useState([]);
+
+  useEffect(() => {
+
+    const response = fetch("/api/tasks", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+      .then((response) => {
+          if (!response.ok) {
+              return "not ok";
+          }
+          return response.json();
+
+      }).then((response) => {
+        if(response.success){
+          setTasks(response.data?.data)
+        }
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+  },[]);
+
   let taskList = [
     {
       "id": 1,
@@ -85,7 +113,7 @@ export default function TaskList() {
       />  
         <BlockStack gap={200}>
         {
-            taskList.map(taskItem => {
+            tasks.map(taskItem => {
                 return <TaskItem taskItem={taskItem}/>
             })
         }

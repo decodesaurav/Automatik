@@ -1,7 +1,7 @@
-import { Card, Page, Text, List, BlockStack } from "@shopify/polaris";
+import { Page, BlockStack } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
-import TaskItem from "../components/TaskList/Index";
+import QuickTaskItem from "../components/TaskList/QuickTaskItem";
 
 export default function QuickTaskList() {
   const { t } = useTranslation();
@@ -86,7 +86,7 @@ export default function QuickTaskList() {
         <BlockStack gap={200}>
         {
             taskList.map(taskItem => {
-                return <TaskItem taskItem={taskItem}/>
+                return <QuickTaskItem taskItem={taskItem}/>
             })
         }
       </BlockStack>

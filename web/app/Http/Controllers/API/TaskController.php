@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
+    public function index(Request $request)
+    {
+        $session = $request->get('shopifySession');
+        $session = Session::where('session_id', $session->getId())->first();
+
+        $tasks = Task::where(['session_id' => $session->id])->paginate(10);
+        return response()->json(['success' => true, 'data' => $tasks]);
+    }
+
 	public function store(Request $request)
 	{
 		DB::beginTransaction();
