@@ -1,44 +1,87 @@
-import { InlineStack, Select, TextField } from "@shopify/polaris";
+import { BlockStack, InlineStack, Select, TextField } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useCallback, useReducer } from "react";
-import CustomTaskReducer, { actionTypes, customeTaskState } from "../../reducers/CustomTaskReducer";
 
-export default function InventoryTask() {
+export default function InventoryTask({stateData,dispatch,actionTypes,errorData}) {
+  let state = stateData;
   const { t } = useTranslation();
-  const [state, dispatch] = useReducer(CustomTaskReducer, customeTaskState);
-
   const handleAdjustmentChange = useCallback((value) => {
-      dispatch({
-          type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
-          payload: { method: value }, // Update the method in adjustment
-      });
-  }, []);
+    dispatch({
+        type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
+        payload: { method: value }, // Update the method in adjustment
+    });
+}, []);
 
-  const handleValueChange = useCallback((newValue) => {
-      dispatch({
-          type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
-          payload: { value: newValue }, // Update the value in adjustment
-      });
-  }, []);
+const handleAdjustmentTypeChange = useCallback((value) => {
+    dispatch({
+        type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
+        payload: { adjustmentType: value }, // Update the adjustment type in adjustment
+    });
+}, []);
+
+const handleValueChange = useCallback((newValue) => {
+    dispatch({
+        type: actionTypes.HANDLE_ADJUSTMENT_CHANGE,
+        payload: { value: newValue }, // Update the value in adjustment
+    });
+}, []);
 
   return (
     <>
-      <InlineStack gap={200}>
-        <Select
-          options={[
-            { label: "Increase stock by", value: "increase" },
-            { label: "Decrease stock by", value: "decrease" },
-          ]}
-          onChange={handleAdjustmentChange}
-          value={state.adjustment.method || "increase"} // Use state from reducer
-        />
-        <TextField
-          type="number"
-          min={0}
-          value={state.adjustment.value || 0} // Use state from reducer
-          onChange={handleValueChange}
-        />
-      </InlineStack>
+        
+        <InlineStack gap={200}>
+            <BlockStack>
+                <Select
+                    options={[
+                        {
+                            label: "Increase stock by",
+                            value: "increase",
+                        },
+                        {
+                            label: "Decrease stock by",
+                            value: "decrease",
+                        },
+                    ]}
+                    onChange={handleAdjustmentChange}
+                    value={state.adjustment?.method}
+                />
+                {errorData?.adjustment_method && (
+                    <InlineError message={errorData.adjustment_method} fieldID="method" />
+                )}
+            </BlockStack>
+
+            <BlockStack>
+                <TextField
+                    type="number"
+                    min={0}
+                    value={state.adjustment?.value}
+                    onChange={handleValueChange}
+                />
+                {errorData?.adjustment_value && (
+                    <InlineError message={errorData.adjustment_value} fieldID="value" />
+                )}
+            </BlockStack>
+
+            <BlockStack>
+                <Select
+                    options={[
+                        {
+                            label: "Fixed Amount",
+                            value: "amount",
+                        },
+                        {
+                            label: "Percent",
+                            value: "percent",
+                        },
+                    ]}
+                    onChange={handleAdjustmentTypeChange}
+                    value={state.adjustment?.adjustmentType}
+                />
+                {errorData?.adjustment_type && (
+                    <InlineError message={errorData.adjustment_type} fieldID="adjustmentType" />
+                )}
+            </BlockStack>
+        </InlineStack>
     </>
   );
 }

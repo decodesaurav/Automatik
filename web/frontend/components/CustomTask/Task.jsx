@@ -205,7 +205,8 @@ const handleValidation = () => {
         <Card>
             <BlockStack gap={200}>
             <Text variant="headingSm">How would you like to change your {state.taskType == 'price' ? "Price": "Inventory"}?</Text>
-                {state.taskType == 'price' ? <PriceTask stateData={state} dispatch={dispatch} actionTypes={actionTypes} errorData={state.errorData} key="price-task" /> : <InventoryTask key="inventory-task" />}
+                {state.taskType == 'price' ? <PriceTask stateData={state} dispatch={dispatch} actionTypes={actionTypes} errorData={state.errorData} key="price-task" /> : 
+                <InventoryTask key="inventory-task" stateData={state} dispatch={dispatch} actionTypes={actionTypes} errorData={state.errorData} />}
             </BlockStack>
         </Card>
 
