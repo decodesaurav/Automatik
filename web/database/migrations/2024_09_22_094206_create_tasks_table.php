@@ -15,6 +15,7 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('session_id');
             $table->string('task_type');
             $table->string('schedule_time');
             $table->string('revert_time')->nullable();

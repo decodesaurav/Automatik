@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Session;
 use App\Models\Task;
 use App\Models\TaskAdjustment;
 use App\Models\TaskCondition;
@@ -15,8 +16,12 @@ class TaskController extends Controller
     {
         DB::beginTransaction();
         try {
+            $session = $request->get('shopifySession');
+            $session = Session::where('session_id', $session->getId())->first();
+
             // Save Task First
             $taskData = [
+                'session_id' => $session->id,
                 'task_type' => $request->task_type,
                 'schedule_time' => $request->schedule_time,
                 'revert_time' => $request->revert_time ?: null,
